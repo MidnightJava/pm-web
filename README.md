@@ -7,7 +7,7 @@ npm install
 cd client
 npm install
 
-#usage
+# usage
 cd pm-web
 npm run dev # starts the reatc development server, which adjusts to source code changes automatically
 or
