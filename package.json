@@ -1,0 +1,19 @@
+{
+  "name": "pm-web",
+  "version": "1.0.0",
+  "description": "Church membership tracking application",
+  "main": "ws-server.js",
+  "scripts": {
+    "dev": "npm-run-all --parallel ws-server dev-client",
+    "ops": "npm-run-all --parallel ws-server ops-client",
+    "ws-server": "node ./ws-server",
+    "dev-client": "cd client && npm run dev",
+    "ops-client": "cd client && npm run ops"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "npm-run-all": "^4.1.5",
+    "ws": "^7.0.0"
+  }
+}

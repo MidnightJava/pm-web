@@ -1,0 +1,44 @@
+.App {
+  text-align: center;
+}
+
+
+.App-header {
+  margin-top: 10%;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.reveal {
+  background-color: yellow;
+}
+
+.parent-container {
+  position: 'absolute';
+  height: '100%';
+  width: '100%';
+  display: 'table';
+}
+
+.sub-container {
+  position: 'relative';
+  height: '100%';
+  width: '100%';
+  display: 'table-cell';
+  vertical-align: 'middle';
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
