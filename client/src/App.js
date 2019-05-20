@@ -8,6 +8,7 @@ import './App.css';
 const uuidv4 = require('uuid/v4');
 const WSS_ADDR = 'localhost';
 const WSS_PORT = 4000;
+const CONN_RETRY_INTERVAL = 5000;
 
 class App extends React.Component {
 
@@ -17,7 +18,8 @@ class App extends React.Component {
       counting: false,
       count: 0,
       msg: '',
-      response: ''
+      response: '',
+      connected: false
     }
     this.rpcMap = {};
     this.connectToWebsocket();
@@ -39,27 +41,40 @@ class App extends React.Component {
       }
     }
 
+    this.ws.onopen = () => {
+      console.log('Connected to server');
+      this.setState({connected: true, statusClass: 'green'});
+    };
+
     this.ws.onclose = () => {
       console.log('The server closed the connection');
+      this.ws = null;
+      this.setState({connected: false, statusClass: 'red'});
+      setTimeout(() => {
+        this.connectToWebsocket()
+      }, CONN_RETRY_INTERVAL);
     }
   }
+
+  /* To start, stop, or reset the counter, we send a messsage
+     on the WebSocket */
 
   startCounter() {
     let msg = {cmd: 'count', action: 'start'};
     this.setState({counting: true});
-    this.ws.send(JSON.stringify(msg));
+    this.ws && this.ws.send(JSON.stringify(msg));
   }
 
   stopCounter() {
     let msg = {cmd: 'count', action: 'stop'};
     this.setState({counting: false});
-    this.ws.send(JSON.stringify(msg));
+    this.ws && this.ws.send(JSON.stringify(msg));
   }
 
   resetCounter() {
     let msg = {cmd: 'count', action: 'reset'};
     this.setState({count: 0});
-    this.ws.send(JSON.stringify(msg));
+    this.ws && this.ws.send(JSON.stringify(msg));
   }
 
   async sendMsg() {
@@ -68,10 +83,15 @@ class App extends React.Component {
     this.setState({response});
   }
 
+  /* The echo funciton is used to illustrate an RPC-style
+     exchange over the WebSocket. The Promise resolves when
+     a response is received, emulating a synchronous call
+     to the server. */
+
   sendRpc(req) {
     return new Promise( (resolve, reject) => {
       this.rpcMap[req.id] = resolve;
-      this.ws.send(JSON.stringify(req));
+      this.ws && this.ws.send(JSON.stringify(req));
     });
   }
 
@@ -146,9 +166,14 @@ class App extends React.Component {
             </InputGroup>
           </div>
         </div>
-        <div className="row pt-1">
+        <div className="row py-1">
           <div className='col-md-4 offset-md-4'>
             <Button variant='success' onClick={() => {this.setState({response: ''})}}>Clear</Button>
+          </div>
+        </div>
+        <div className="row pt-1">
+          <div className='col-md-4 offset-md-4'>
+            <label><font color={this.state.statusClass}>Server {this.state.connected ? 'connected' : 'disconnected'}</font></label>
           </div>
         </div>
       </div>
