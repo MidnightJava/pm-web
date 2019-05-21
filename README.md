@@ -22,9 +22,15 @@ cd pm-web
 
 npm run dev `# starts the React development server, which adjusts to source code changes automatically`
 
-or
+or build an optimized version of the app (compiled into a few files) and run it
 
-npm run ops `# Serves an optimzed version of the app via express (in server.js)`
+cd client
+
+npm run build
+
+cd ..
+
+npm run ops `# Serves the app via express (in server.js)`
 
 
 In either case, the app can ge found at http://localhost:3000
