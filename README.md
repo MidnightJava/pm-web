@@ -17,7 +17,7 @@ The client wraps the WebSocket exchange in a way that emulates a synchronous exc
 
 * npm install
 
-# Usae
+# Use
 ## Developer
 Run the React development server, which adjusts to source code changes automatically, shows detailed error messages in the browser console, and supports many other tooling capabilities
 * cd pm-web 
