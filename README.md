@@ -8,7 +8,7 @@ The app works with multiple browsers, keeping data for each browser session sepa
 
 The client wraps the WebSocket exchange in a way that emulates a synchronous exchange. It assigns a unique ID to each request an returns a Promise that resolves when a response with the same ID is received. Using the `async await` facility of ES6, we even use synchronous method syntax for this asynchronous exchange.
 
-# install
+# Install
 cd pm-web
 
 npm install
@@ -17,12 +17,14 @@ cd client
 
 npm install
 
-# usage
+# Usage
+## Developer
 cd pm-web
 
 npm run dev `# starts the React development server, which adjusts to source code changes automatically`
 
-or build an optimized version of the app (compiled into a few files) and run it
+## Production
+Build an optimized version of the app (compiled into a few files) and run it
 
 cd client
 
